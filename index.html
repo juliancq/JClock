@@ -4,64 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap');
-
-        *{
-            margin: 0;
-            font-family: 'DM Sans';
-            user-select: none;
-        }
-        
-        html, body{
-
-            min-height: 100vh;
-        }
-
-        body{
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #0f0f0f;
-            color: #f1e7e7;
-        }
-
-        #clock{
-            
-            font-size: 600%;
-        }
-
-        button{
-
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .fixed{
-            display: flex;
-            position: fixed;
-            bottom: 5px;
-            right: 5px;
-        }
-
-        input[type=color]{
-
-            opacity: 0%;
-        }
-
-        .color-wrapper{
-
-            border: 1px solid white;
-        }
-
-        .hidden{
-
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
     <title>Clock</title>
 </head>
 <body>
@@ -73,7 +16,7 @@
             ✖
         </button>
         <div class="color-wrapper" id="bg-color-wrapper">
-            <input type="color" name="color" id="color-picker-bg" value="#0f0f0f">
+            <input type="color" name="color" id="color-picker-bg" value="#3e3b3b">
         </div>
         <div class="color-wrapper" id="clock-color-wrapper">
             <input type="color" name="color" id="color-picker-clock" value="#f1e7e7">
@@ -84,85 +27,5 @@
     </button>
     
 </body>
-<script>
-
-    const clock = document.querySelector("#clock");
-    const body = document.querySelector("body");
-
-    const colorPickerBg = document.querySelector("#color-picker-bg");
-    const colorPickerClock = document.querySelector("#color-picker-clock");
-    const bgColorWrapper = document.querySelector("#bg-color-wrapper");
-    const clockColorWrapper = document.querySelector("#clock-color-wrapper");
-    
-    const closeBtn = document.querySelector("#close-btn");
-    const openBtn = document.querySelector("#open-btn");
-
-    loadColorsFromDB();
-
-
-    function loadColorsFromDB(){
-
-        colorPickerBg.value = localStorage.getItem("bgColor") || "#0f0f0f";
-        colorPickerClock.value = localStorage.getItem("clockColor") || "#f1e7e7";
-
-        body.style.backgroundColor = localStorage.getItem("bgColor") || "#0f0f0f";
-        clock.style.color = localStorage.getItem("clockColor") || "#f1e7e7";
-
-        bgColorWrapper.style.backgroundColor = localStorage.getItem("bgColor") || "#0f0f0f";
-        clockColorWrapper.style.backgroundColor = localStorage.getItem("clockColor") || "#f1e7e7";
-    }
-
-    function saveBackgroundColor(color){
-
-        localStorage.setItem("bgColor", color)
-    }
-
-    function saveClockColor(color){
-
-        localStorage.setItem("clockColor", color)
-    }   
-
-
-    setInterval(()=> {
-
-        let date = new Date()
-        
-        clock.innerHTML = ` ${date.getHours()} : 
-                            ${date.getMinutes() > 10 ? date.getMinutes() : "0" + date.getMinutes()} :
-                            ${date.getSeconds() > 10 ? date.getSeconds() : "0" + date.getSeconds()}`
-
-    },1000)
-    
-    document.addEventListener("dblclick", ()=>{
-        document.documentElement.requestFullscreen();
-    })
-
-    openBtn.addEventListener("click", ()=>{
-
-        document.querySelector("#buttons").classList.remove("hidden");
-        openBtn.classList.add("hidden");
-    })
-
-    closeBtn.addEventListener("click", ()=>{
-
-        document.querySelector("#buttons").classList.add("hidden");
-        openBtn.classList.remove("hidden")
-    })
-
-    colorPickerBg.addEventListener("input", () => {
-
-        saveBackgroundColor(colorPickerBg.value);
-        body.style.backgroundColor = colorPickerBg.value;
-        bgColorWrapper.style.backgroundColor = colorPickerBg.value;
-    })
-
-    colorPickerClock.addEventListener("input", () => {
-
-        saveClockColor(colorPickerClock.value)
-        clock.style.color = colorPickerClock.value
-        clockColorWrapper.style.backgroundColor = colorPickerClock.value;
-    })
-
-
-</script>
+<script src="script.js"></script>
 </html>
